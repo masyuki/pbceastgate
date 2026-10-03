@@ -1,0 +1,460 @@
+{% extends "base.html" %}
+
+{% block title %}
+PBC Eastgate | Welcome
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     HERO
+     ========================================= -->
+
+<section class="home-hero">
+
+    <div class="home-hero-overlay"></div>
+
+    <div class="home-container home-hero-content">
+
+        <span class="home-eyebrow">
+            PARKLANDS BAPTIST CHURCH — EASTGATE
+        </span>
+
+        <h1>
+            A Place to
+            <span>Worship, Belong & Grow</span>
+        </h1>
+
+        <p>
+            Welcome to PBC Eastgate. Join us as we worship God,
+            grow together in Christ and serve our community.
+        </p>
+
+        <div class="home-hero-actions">
+
+            <a
+                href="#visit"
+                class="home-btn home-btn-primary"
+            >
+                Join Us This Sunday
+            </a>
+
+            <a
+                href="{% url 'sermons:list' %}"
+                class="home-btn home-btn-light"
+            >
+                Explore Sermons
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     QUICK INFO
+     ========================================= -->
+
+<section class="home-info-strip">
+
+    <div class="home-container home-info-grid">
+
+        <div class="home-info-item">
+
+            <div class="home-info-icon">
+                ✦
+            </div>
+
+            <div>
+                <strong>Sunday Worship</strong>
+                <span>Join us every Sunday</span>
+            </div>
+
+        </div>
+
+
+        <div class="home-info-item">
+
+            <div class="home-info-icon">
+                ◷
+            </div>
+
+            <div>
+                <strong>Service Times</strong>
+                <span>Check our latest schedule</span>
+            </div>
+
+        </div>
+
+
+        <div class="home-info-item">
+
+            <div class="home-info-icon">
+                ⌖
+            </div>
+
+            <div>
+                <strong>Eastgate</strong>
+                <span>Come worship with us</span>
+            </div>
+
+        </div>
+
+
+        <div class="home-info-item">
+
+            <div class="home-info-icon">
+                ♡
+            </div>
+
+            <div>
+                <strong>Everyone Welcome</strong>
+                <span>There is a place for you</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     ABOUT
+     ========================================= -->
+
+<section class="home-about">
+
+    <div class="home-container home-two-column">
+
+        <div class="home-about-image">
+
+            <div class="home-image-placeholder">
+                <span>PBC</span>
+            </div>
+
+        </div>
+
+
+        <div class="home-about-content">
+
+            <span class="home-eyebrow">
+                WELCOME HOME
+            </span>
+
+            <h2>
+                Growing together in Christ
+            </h2>
+
+            <p>
+                PBC Eastgate is a community of believers committed
+                to worshipping God, growing in faith, building
+                meaningful relationships and making a difference
+                in our community.
+            </p>
+
+            <p>
+                Whether you are visiting for the first time or
+                looking for a church family, we would love to
+                welcome you.
+            </p>
+
+            <a
+                href="{% url 'pages:about' %}"
+                class="home-text-link"
+            >
+                Discover who we are
+                <span>→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     EVENTS
+     ========================================= -->
+
+<section class="home-events">
+
+    <div class="home-container">
+
+        <div class="home-section-heading">
+
+            <div>
+
+                <span class="home-eyebrow">
+                    WHAT'S HAPPENING
+                </span>
+
+                <h2>
+                    Upcoming Events
+                </h2>
+
+            </div>
+
+            <a
+                href="{% url 'events:list' %}"
+                class="home-outline-link"
+            >
+                View all events →
+            </a>
+
+        </div>
+
+
+        {% if upcoming_events %}
+
+            <div class="home-event-grid">
+
+                {% for event in upcoming_events %}
+
+                    <article class="home-event-card">
+
+                        <div class="home-event-date">
+
+                            <strong>
+                                {{ event.event_date|date:"d" }}
+                            </strong>
+
+                            <span>
+                                {{ event.event_date|date:"M" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="home-event-content">
+
+                            <h3>
+                                {{ event.title }}
+                            </h3>
+
+                            {% if event.start_time %}
+                                <p>
+                                    {{ event.start_time|time:"g:i A" }}
+                                </p>
+                            {% endif %}
+
+                            {% if event.location %}
+                                <p>
+                                    {{ event.location }}
+                                </p>
+                            {% endif %}
+
+                            <a
+                                href="{% url 'events:detail' event.slug %}"
+                            >
+                                View event →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="home-empty-state">
+
+                <p>
+                    There are currently no upcoming events.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SERMON
+     ========================================= -->
+
+<section class="home-sermon">
+
+    <div class="home-container">
+
+        <div class="home-sermon-box">
+
+            <div class="home-sermon-content">
+
+                <span class="home-eyebrow">
+                    FROM THE WORD
+                </span>
+
+                <h2>
+                    Latest Sermon
+                </h2>
+
+                {% if latest_sermon %}
+
+                    <h3>
+                        {{ latest_sermon.title }}
+                    </h3>
+
+                    {% if latest_sermon.preacher %}
+                        <p class="home-sermon-preacher">
+                            {{ latest_sermon.preacher }}
+                        </p>
+                    {% endif %}
+
+                    {% if latest_sermon.sermon_date %}
+                        <p>
+                            {{ latest_sermon.sermon_date|date:"F d, Y" }}
+                        </p>
+                    {% endif %}
+
+                    <a
+                        href="{% url 'sermons:detail' latest_sermon.slug %}"
+                        class="home-btn home-btn-light"
+                    >
+                        Listen / Watch Sermon
+                    </a>
+
+                {% else %}
+
+                    <p>
+                        Our latest sermon will appear here.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     MINISTRIES
+     ========================================= -->
+
+<section class="home-ministries">
+
+    <div class="home-container">
+
+        <div class="home-section-heading home-centered-heading">
+
+            <span class="home-eyebrow">
+                FIND YOUR PLACE
+            </span>
+
+            <h2>
+                Get Connected
+            </h2>
+
+            <p>
+                There are many ways to connect, serve and grow
+                at PBC Eastgate.
+            </p>
+
+        </div>
+
+
+        <div class="home-ministry-grid">
+
+            <div class="home-ministry-item">
+                <span>01</span>
+                <h3>Children</h3>
+                <p>
+                    Helping children discover and grow in faith.
+                </p>
+            </div>
+
+            <div class="home-ministry-item">
+                <span>02</span>
+                <h3>Youth</h3>
+                <p>
+                    Building a generation rooted in Christ.
+                </p>
+            </div>
+
+            <div class="home-ministry-item">
+                <span>03</span>
+                <h3>Men</h3>
+                <p>
+                    Growing together through fellowship and faith.
+                </p>
+            </div>
+
+            <div class="home-ministry-item">
+                <span>04</span>
+                <h3>Women</h3>
+                <p>
+                    Encouraging women to flourish in Christ.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CALL TO ACTION
+     ========================================= -->
+
+<section
+    class="home-visit"
+    id="visit"
+>
+
+    <div class="home-container">
+
+        <div class="home-visit-content">
+
+            <span class="home-eyebrow">
+                WE WOULD LOVE TO SEE YOU
+            </span>
+
+            <h2>
+                Come Worship With Us
+            </h2>
+
+            <p>
+                Whether you're new to church or looking for a
+                church family, you are welcome at PBC Eastgate.
+            </p>
+
+            <div class="home-hero-actions">
+
+                <a
+                    href="{% url 'pages:about' %}"
+                    class="home-btn home-btn-light"
+                >
+                    Learn More
+                </a>
+
+                <a
+                    href="{% url 'members:login' %}"
+                    class="home-btn home-btn-outline-light"
+                >
+                    Member Portal
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

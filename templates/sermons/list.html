@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sermons | PBC Eastgate
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                Sermons
+            </span>
+
+            <h1>
+                Messages from PBC Eastgate
+            </h1>
+
+            <p>
+                Listen to and watch messages from our church.
+            </p>
+
+        </div>
+
+
+        {% if sermons %}
+
+            <div class="card-grid">
+
+                {% for sermon in sermons %}
+
+                    <article class="card">
+
+                        {% if sermon.thumbnail %}
+
+                            <img
+                                src="{{ sermon.thumbnail.url }}"
+                                alt="{{ sermon.title }}"
+                            >
+
+                        {% endif %}
+
+
+                        <div class="card-body">
+
+                            <p>
+                                {{ sermon.sermon_date|date:"F j, Y" }}
+                            </p>
+
+                            <h2>
+                                {{ sermon.title }}
+                            </h2>
+
+                            <p>
+                                <strong>
+                                    {{ sermon.speaker }}
+                                </strong>
+                            </p>
+
+
+                            {% if sermon.scripture %}
+
+                                <p>
+                                    <strong>Scripture:</strong>
+                                    {{ sermon.scripture }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if sermon.description %}
+
+                                <p>
+                                    {{ sermon.description|truncatewords:30 }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <a
+                                href="{{ sermon.get_absolute_url }}"
+                                class="btn btn-primary"
+                            >
+                                View Sermon
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="content-section">
+
+                <h2>
+                    No sermons available yet.
+                </h2>
+
+                <p>
+                    Check back soon for the latest messages.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

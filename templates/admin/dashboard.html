@@ -1,0 +1,1060 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}
+PBC Eastgate Dashboard
+{% endblock %}
+
+
+{% block extrastyle %}
+{{ block.super }}
+
+<style>
+
+    /* =========================================
+       DASHBOARD
+    ========================================= */
+
+    .pbc-dashboard {
+        max-width: 1450px;
+        margin: 0 auto;
+        padding-bottom: 40px;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    .pbc-dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 28px 32px;
+        background: #ffffff;
+        border: 1px solid #e5e9e6;
+        border-radius: 12px;
+    }
+
+    .pbc-dashboard-eyebrow {
+        display: block;
+        margin-bottom: 7px;
+        color: #6d8b4c;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+
+    .pbc-dashboard-header h1 {
+        margin: 0;
+        color: #172033;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .pbc-dashboard-header p {
+        margin: 8px 0 0;
+        color: #69737b;
+        font-size: 14px;
+    }
+
+    .pbc-dashboard-date {
+        text-align: right;
+        color: #69737b;
+        font-size: 13px;
+    }
+
+
+    /* =========================================
+       STAT CARDS
+    ========================================= */
+
+    .pbc-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .pbc-stat-card {
+        position: relative;
+        padding: 24px;
+        background: #ffffff;
+        border: 1px solid #e5e9e6;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .pbc-stat-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #6d8b4c;
+    }
+
+    .pbc-stat-label {
+        color: #69737b;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .pbc-stat-number {
+        display: block;
+        margin-top: 10px;
+        color: #172033;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .pbc-stat-description {
+        display: block;
+        margin-top: 10px;
+        color: #899199;
+        font-size: 12px;
+    }
+
+
+    /* =========================================
+       MAIN GRID
+    ========================================= */
+
+    .pbc-main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 22px;
+        margin-bottom: 28px;
+    }
+
+
+    /* =========================================
+       PANELS
+    ========================================= */
+
+    .pbc-panel {
+        background: #ffffff;
+        border: 1px solid #e5e9e6;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .pbc-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid #edf0ee;
+    }
+
+    .pbc-panel-header h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .pbc-panel-header p {
+        margin: 5px 0 0;
+        color: #899199;
+        font-size: 12px;
+    }
+
+    .pbc-panel-link {
+        color: #426b50;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .pbc-panel-link:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =========================================
+       FINANCIAL SUMMARY
+    ========================================= */
+
+    .pbc-financial-body {
+        padding: 24px;
+    }
+
+    .pbc-financial-total {
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #edf0ee;
+    }
+
+    .pbc-financial-total span {
+        color: #69737b;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .pbc-financial-total strong {
+        display: block;
+        margin-top: 7px;
+        color: #1f4d3a;
+        font-size: 32px;
+    }
+
+    .pbc-financial-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 0;
+    }
+
+    .pbc-financial-row + .pbc-financial-row {
+        border-top: 1px solid #f0f2f1;
+    }
+
+    .pbc-financial-row-label {
+        color: #69737b;
+        font-size: 13px;
+    }
+
+    .pbc-financial-row-value {
+        color: #172033;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       QUICK ACTIONS
+    ========================================= */
+
+    .pbc-actions {
+        padding: 12px;
+    }
+
+    .pbc-action {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 12px;
+        color: #172033;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .pbc-action:hover {
+        background: #f4f7f4;
+    }
+
+    .pbc-action-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background: #eef3ec;
+        color: #426b50;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .pbc-action strong {
+        display: block;
+        font-size: 13px;
+    }
+
+    .pbc-action span {
+        display: block;
+        margin-top: 3px;
+        color: #899199;
+        font-size: 11px;
+    }
+
+
+    /* =========================================
+       LOWER GRID
+    ========================================= */
+
+    .pbc-lower-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 22px;
+    }
+
+
+    /* =========================================
+       TRANSACTIONS
+    ========================================= */
+
+    .pbc-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .pbc-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .pbc-table th {
+        padding: 13px 20px;
+        background: #f7f9f7;
+        color: #69737b;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: .4px;
+    }
+
+    .pbc-table td {
+        padding: 15px 20px;
+        color: #4f5961;
+        font-size: 13px;
+        border-top: 1px solid #edf0ee;
+    }
+
+    .pbc-table tr:hover td {
+        background: #fafcfa;
+    }
+
+    .pbc-income {
+        color: #3f7652 !important;
+        font-weight: 700;
+    }
+
+    .pbc-expense {
+        color: #9a5555 !important;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       MEMBERSHIP SUMMARY
+    ========================================= */
+
+    .pbc-membership-body {
+        padding: 22px;
+    }
+
+    .pbc-membership-item {
+        margin-bottom: 22px;
+    }
+
+    .pbc-membership-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .pbc-membership-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .pbc-membership-row span {
+        color: #69737b;
+        font-size: 13px;
+    }
+
+    .pbc-membership-row strong {
+        color: #172033;
+        font-size: 13px;
+    }
+
+    .pbc-progress {
+        height: 7px;
+        overflow: hidden;
+        background: #edf0ee;
+        border-radius: 10px;
+    }
+
+    .pbc-progress-bar {
+        height: 100%;
+        background: #6d8b4c;
+        border-radius: 10px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 1100px) {
+
+        .pbc-stat-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .pbc-main-grid,
+        .pbc-lower-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .pbc-dashboard-header {
+            display: block;
+        }
+
+        .pbc-dashboard-date {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .pbc-stat-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pbc-dashboard-header h1 {
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="pbc-dashboard">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="pbc-dashboard-header">
+
+        <div>
+
+            <span class="pbc-dashboard-eyebrow">
+                PBC EASTGATE ADMINISTRATION
+            </span>
+            <div class="pbc-admin-navigation">
+
+    <a href="{% url 'admin-dashboard' %}" class="active">
+        Dashboard
+    </a>
+
+    <a href="{% url 'admin:members_memberprofile_changelist' %}">
+        Members
+    </a>
+
+    <a href="{% url 'admin:sermons_sermon_changelist' %}">
+        Sermons
+    </a>
+
+    <a href="{% url 'admin:events_event_changelist' %}">
+        Events
+    </a>
+
+    <a href="{% url 'admin:core_financialtransaction_changelist' %}">
+        Finance
+    </a>
+
+</div>
+            <h1>
+                Church Dashboard
+            </h1>
+
+            <p>
+                Welcome back. Here's an overview of the church.
+            </p>
+
+        </div>
+
+        <div class="pbc-dashboard-date">
+
+            {{ today|date:"l, d F Y" }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         MEMBERSHIP STATISTICS
+    ====================================== -->
+
+    <div class="pbc-stat-grid">
+
+
+        <div class="pbc-stat-card">
+
+            <span class="pbc-stat-label">
+                Total Members
+            </span>
+
+            <strong class="pbc-stat-number">
+                {{ total_members }}
+            </strong>
+
+            <span class="pbc-stat-description">
+                Registered profiles
+            </span>
+
+        </div>
+
+
+        <div class="pbc-stat-card">
+
+            <span class="pbc-stat-label">
+                Active Members
+            </span>
+
+            <strong class="pbc-stat-number">
+                {{ active_members }}
+            </strong>
+
+            <span class="pbc-stat-description">
+                Currently active
+            </span>
+
+        </div>
+
+
+        <div class="pbc-stat-card">
+
+            <span class="pbc-stat-label">
+                Visitors
+            </span>
+
+            <strong class="pbc-stat-number">
+                {{ visitors }}
+            </strong>
+
+            <span class="pbc-stat-description">
+                Visitor profiles
+            </span>
+
+        </div>
+
+
+        <div class="pbc-stat-card">
+
+            <span class="pbc-stat-label">
+                New This Month
+            </span>
+
+            <strong class="pbc-stat-number">
+                {{ new_this_month }}
+            </strong>
+
+            <span class="pbc-stat-description">
+                New registrations
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================
+         FINANCE + ACTIONS
+    ====================================== -->
+
+    <div class="pbc-main-grid">
+
+
+        <!-- FINANCIALS -->
+
+        <div class="pbc-panel">
+
+            <div class="pbc-panel-header">
+
+                <div>
+
+                    <h2>
+                        Financial Overview
+                    </h2>
+
+                    <p>
+                        Church financial position
+                    </p>
+
+                </div>
+
+                <a
+                    class="pbc-panel-link"
+                    href="{% url 'admin:core_financialtransaction_changelist' %}"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="pbc-financial-body">
+
+
+                <div class="pbc-financial-total">
+
+                    <span>
+                        Net Balance
+                    </span>
+
+                    <strong>
+                        KES {{ net_balance|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="pbc-financial-row">
+
+                    <span class="pbc-financial-row-label">
+                        Total Income
+                    </span>
+
+                    <span class="pbc-financial-row-value">
+                        KES {{ income|floatformat:2 }}
+                    </span>
+
+                </div>
+
+
+                <div class="pbc-financial-row">
+
+                    <span class="pbc-financial-row-label">
+                        Total Expenses
+                    </span>
+
+                    <span class="pbc-financial-row-value">
+                        KES {{ expenses|floatformat:2 }}
+                    </span>
+
+                </div>
+
+
+                <div class="pbc-financial-row">
+
+                    <span class="pbc-financial-row-label">
+                        This Month — Income
+                    </span>
+
+                    <span class="pbc-financial-row-value">
+                        KES {{ monthly_income|floatformat:2 }}
+                    </span>
+
+                </div>
+
+
+                <div class="pbc-financial-row">
+
+                    <span class="pbc-financial-row-label">
+                        This Month — Expenses
+                    </span>
+
+                    <span class="pbc-financial-row-value">
+                        KES {{ monthly_expenses|floatformat:2 }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="pbc-panel">
+
+            <div class="pbc-panel-header">
+
+                <div>
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                    <p>
+                        Frequently used tools
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pbc-actions">
+
+
+                <a
+                    class="pbc-action"
+                    href="{% url 'admin:members_memberprofile_add' %}"
+                >
+
+                    <div class="pbc-action-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Add Member
+                        </strong>
+
+                        <span>
+                            Register a church member
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    class="pbc-action"
+                    href="{% url 'admin:sermons_sermon_add' %}"
+                >
+
+                    <div class="pbc-action-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Add Sermon
+                        </strong>
+
+                        <span>
+                            Publish a new sermon
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    class="pbc-action"
+                    href="{% url 'admin:events_event_add' %}"
+                >
+
+                    <div class="pbc-action-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Add Event
+                        </strong>
+
+                        <span>
+                            Create a church event
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    class="pbc-action"
+                    href="{% url 'admin:core_financialtransaction_add' %}"
+                >
+
+                    <div class="pbc-action-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Add Transaction
+                        </strong>
+
+                        <span>
+                            Record income or expense
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         TRANSACTIONS + MEMBERSHIP
+    ====================================== -->
+
+    <div class="pbc-lower-grid">
+
+
+        <!-- RECENT TRANSACTIONS -->
+
+        <div class="pbc-panel">
+
+            <div class="pbc-panel-header">
+
+                <div>
+
+                    <h2>
+                        Recent Transactions
+                    </h2>
+
+                    <p>
+                        Latest church financial activity
+                    </p>
+
+                </div>
+
+                <a
+                    class="pbc-panel-link"
+                    href="{% url 'admin:core_financialtransaction_changelist' %}"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="pbc-table-wrapper">
+
+                <table class="pbc-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for transaction in recent_transactions %}
+
+                        <tr>
+
+                            <td>
+                                {{ transaction.transaction_date|date:"d M Y" }}
+                            </td>
+
+                            <td>
+                                {{ transaction.description|default:"—" }}
+                            </td>
+
+                            <td>
+                                {{ transaction.get_transaction_type_display }}
+                            </td>
+
+                            <td
+                                class="{% if transaction.transaction_type == 'income' %}pbc-income{% else %}pbc-expense{% endif %}"
+                            >
+
+                                {% if transaction.transaction_type == "income" %}
+                                    +
+                                {% else %}
+                                    -
+                                {% endif %}
+
+                                KES {{ transaction.amount|floatformat:2 }}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="4">
+                                No financial transactions recorded yet.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEMBERSHIP -->
+
+        <div class="pbc-panel">
+
+            <div class="pbc-panel-header">
+
+                <div>
+
+                    <h2>
+                        Membership
+                    </h2>
+
+                    <p>
+                        Current membership status
+                    </p>
+
+                </div>
+
+                <a
+                    class="pbc-panel-link"
+                    href="{% url 'admin:members_memberprofile_changelist' %}"
+                >
+                    Manage →
+                </a>
+
+            </div>
+
+
+            <div class="pbc-membership-body">
+
+
+                <div class="pbc-membership-item">
+
+                    <div class="pbc-membership-row">
+
+                        <span>
+                            Active Members
+                        </span>
+
+                        <strong>
+                            {{ active_members }}
+                        </strong>
+
+                    </div>
+
+                    <div class="pbc-progress">
+
+                        <div
+                            class="pbc-progress-bar"
+                            style="width: {% if total_members %}{% widthratio active_members total_members 100 %}{% else %}0{% endif %}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pbc-membership-item">
+
+                    <div class="pbc-membership-row">
+
+                        <span>
+                            Members
+                        </span>
+
+                        <strong>
+                            {{ members }}
+                        </strong>
+
+                    </div>
+
+                    <div class="pbc-progress">
+
+                        <div
+                            class="pbc-progress-bar"
+                            style="width: {% if total_members %}{% widthratio members total_members 100 %}{% else %}0{% endif %}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pbc-membership-item">
+
+                    <div class="pbc-membership-row">
+
+                        <span>
+                            Visitors
+                        </span>
+
+                        <strong>
+                            {{ visitors }}
+                        </strong>
+
+                    </div>
+
+                    <div class="pbc-progress">
+
+                        <div
+                            class="pbc-progress-bar"
+                            style="width: {% if total_members %}{% widthratio visitors total_members 100 %}{% else %}0{% endif %}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pbc-membership-item">
+
+                    <div class="pbc-membership-row">
+
+                        <span>
+                            Inactive Members
+                        </span>
+
+                        <strong>
+                            {{ inactive_members }}
+                        </strong>
+
+                    </div>
+
+                    <div class="pbc-progress">
+
+                        <div
+                            class="pbc-progress-bar"
+                            style="width: {% if total_members %}{% widthratio inactive_members total_members 100 %}{% else %}0{% endif %}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

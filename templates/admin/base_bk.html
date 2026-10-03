@@ -1,0 +1,63 @@
+{% extends "admin/base.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+
+<style>
+
+    :root {
+        --primary: #1f4d3a;
+        --secondary: #173a2c;
+        --accent: #7da344;
+        --header-bg: #1f4d3a;
+    }
+
+
+    #header {
+        background: #1f4d3a;
+    }
+
+
+    #branding h1,
+    #branding h1 a:link,
+    #branding h1 a:visited {
+        color: #ffffff;
+    }
+
+
+    .module h2,
+    .module caption,
+    .inline-group h2 {
+        background: #1f4d3a;
+    }
+
+
+    div.breadcrumbs {
+        background: #173a2c;
+    }
+
+
+    a:link,
+    a:visited {
+        color: #1f4d3a;
+    }
+
+
+    input[type="submit"],
+    input[type="button"],
+    .submit-row input,
+    button {
+        background: #1f4d3a;
+    }
+
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover,
+    .submit-row input:hover,
+    button:hover {
+        background: #173a2c;
+    }
+
+</style>
+
+{% endblock %}

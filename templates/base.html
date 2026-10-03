@@ -1,0 +1,251 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            PBC Eastgate
+        {% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="{% block meta_description %}
+        PBC Eastgate Church
+        {% endblock %}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/site.css' %}"
+    >
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+
+        <a
+            href="{% url 'core:home' %}"
+            class="site-logo"
+        >
+
+            <img
+                src="{% static 'images/church_logo.jpg' %}"
+                alt="Parklands Baptist Church Eastgate"
+            >
+
+        </a>
+
+
+        <button
+            class="mobile-menu-button"
+            type="button"
+            aria-label="Open navigation"
+            onclick="toggleMobileMenu()"
+        >
+            ☰
+        </button>
+
+
+        <nav
+            class="main-navigation"
+            id="mainNavigation"
+        >
+
+            <a href="{% url 'core:home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'core:about' %}">
+                About
+            </a>
+
+            <a href="#">
+                Ministries
+            </a>
+
+            <a href="{% url 'sermons:list' %}">
+                Sermons
+            </a>
+
+            <a href="{% url 'events:list' %}">
+                Events
+            </a>
+
+            <a href="#">
+                Giving
+            </a>
+
+            <a
+                href="{% url 'members:login' %}"
+                class="member-nav-button"
+            >
+                Members
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="site-footer">
+
+    <div class="container footer-grid">
+
+
+        <div class="footer-column footer-brand">
+
+            <img
+                src="{% static 'images/church_logo.jpg' %}"
+                alt="Parklands Baptist Church Eastgate"
+                class="footer-logo"
+            >
+
+            <p>
+                A Christ-centered community committed
+                to worship, discipleship and service.
+            </p>
+
+            <p class="footer-verse">
+                &ldquo;Arise and Shine&rdquo; &mdash; Isaiah 60:1
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="{% url 'core:about' %}">
+                About Us
+            </a>
+
+            <a href="{% url 'sermons:list' %}">
+                Sermons
+            </a>
+
+            <a href="{% url 'events:list' %}">
+                Events
+            </a>
+
+            <a href="{% url 'members:login' %}">
+                Members Portal
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Contact
+            </h4>
+
+            <p>
+                PBC Eastgate
+            </p>
+
+            <p>
+                Nairobi, Kenya
+            </p>
+
+            <a href="#">
+                Contact Us
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Connect With Us
+            </h4>
+
+            <div class="social-links">
+
+                <a href="#">
+                    Facebook
+                </a>
+
+                <a href="#">
+                    YouTube
+                </a>
+
+                <a href="#">
+                    Instagram
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <p>
+                © {% now "Y" %} PBC Eastgate.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="{% static 'js/site.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+
+</html>

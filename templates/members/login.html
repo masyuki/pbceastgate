@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Member Login | PBC Eastgate
+{% endblock %}
+
+
+{% block content %}
+
+<section class="member-auth">
+
+    <div class="member-auth-container">
+
+        <div class="member-auth-card">
+
+            <div class="member-auth-logo">
+
+                <img
+                    src="/static/images/church_logo.jpg"
+                    alt="PBC Eastgate"
+                >
+
+            </div>
+
+
+            <div class="member-auth-heading">
+
+                <span>
+                    MEMBER PORTAL
+                </span>
+
+        
+                <p>
+                    Sign in to access your PBC Eastgate member portal.
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+                <div class="auth-errors">
+
+                    <p>
+                        {{ error }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <form
+                method="post"
+                class="member-auth-form"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="username"
+                        name="username"
+                        value="{{ username|default:'' }}"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <a href="#">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="member-auth-button"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="member-auth-footer">
+
+                <p>
+                    Don't have an account?
+                    <a href="{% url 'members:signup' %}">
+                        Create an account
+                    </a>
+                </p>
+
+
+                <a
+                    href="{% url 'core:home' %}"
+                    class="back-home"
+                >
+                    ← Back to PBC Eastgate
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

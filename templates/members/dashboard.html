@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}
+Member Dashboard | PBC Eastgate
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                Member Portal
+            </span>
+
+            <h1>
+                Welcome, {{ request.user.first_name|default:request.user.username }}
+            </h1>
+
+            <p>
+                Welcome to the PBC Eastgate Member Portal.
+            </p>
+
+        </div>
+
+
+        <div class="card-grid">
+
+            <article class="card">
+
+                <div class="card-body">
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+                    <p>
+                        View and update your member information.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="card-body">
+
+                    <h2>
+                        Announcements
+                    </h2>
+
+                    <p>
+                        View announcements intended for church members.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="card-body">
+
+                    <h2>
+                        Prayer Requests
+                    </h2>
+
+                    <p>
+                        Submit and manage prayer requests.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="card-body">
+
+                    <h2>
+                        My Groups
+                    </h2>
+
+                    <p>
+                        View your church groups and fellowship activities.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <p>
+
+            <a href="{% url 'members:logout' %}">
+                Sign Out
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Join PBC Eastgate | Member Portal
+{% endblock %}
+
+
+{% block content %}
+
+<section class="member-auth">
+
+    <div class="member-auth-container">
+
+        <div class="member-auth-card">
+
+            <div class="member-auth-logo">
+                <img
+                    src="/static/images/church_logo.jpg"
+                    alt="PBC Eastgate"
+                >
+            </div>
+
+
+            <div class="member-auth-heading">
+
+                <span>
+                    MEMBER PORTAL
+                </span>
+
+                <h1>
+                    Create Your Account
+                </h1>
+
+                <p>
+                    Join the PBC Eastgate online community.
+                </p>
+
+            </div>
+
+
+            {% if errors %}
+
+                <div class="auth-errors">
+
+                    {% for error in errors %}
+
+                        <p>
+                            {{ error }}
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <form
+                method="post"
+                class="member-auth-form"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="first_name">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            value="{{ first_name|default:'' }}"
+                            placeholder="Your first name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="last_name">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            value="{{ last_name|default:'' }}"
+                            placeholder="Your last name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ email|default:'' }}"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password_confirm">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password_confirm"
+                        name="password_confirm"
+                        placeholder="Enter your password again"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="member-auth-button"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="member-auth-footer">
+
+                <p>
+                    Already have an account?
+                    <a href="{% url 'members:login' %}">
+                        Sign in
+                    </a>
+                </p>
+
+                <a
+                    href="{% url 'core:home' %}"
+                    class="back-home"
+                >
+                    ← Back to PBC Eastgate
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

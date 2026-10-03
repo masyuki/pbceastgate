@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ event.title }} | PBC Eastgate
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <article class="content-section">
+
+            {% if event.image %}
+
+                <img
+                    src="{{ event.image.url }}"
+                    alt="{{ event.title }}"
+                >
+
+            {% endif %}
+
+
+            <p>
+                {{ event.event_date|date:"F j, Y" }}
+            </p>
+
+
+            <h1>
+                {{ event.title }}
+            </h1>
+
+
+            {% if event.start_time %}
+
+                <p>
+                    <strong>Time:</strong>
+
+                    {{ event.start_time|time:"g:i A" }}
+
+                    {% if event.end_time %}
+                        -
+                        {{ event.end_time|time:"g:i A" }}
+                    {% endif %}
+                </p>
+
+            {% endif %}
+
+
+            {% if event.location %}
+
+                <p>
+                    <strong>Location:</strong>
+                    {{ event.location }}
+                </p>
+
+            {% endif %}
+
+
+            {% if event.description %}
+
+                <div>
+                    {{ event.description|linebreaks }}
+                </div>
+
+            {% endif %}
+
+
+            {% if event.registration_url %}
+
+                <p>
+
+                    <a
+                        href="{{ event.registration_url }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                    >
+                        Register for Event
+                    </a>
+
+                </p>
+
+            {% endif %}
+
+
+            <p>
+
+                <a href="{% url 'events:list' %}">
+                    ← Back to Events
+                </a>
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+{% endblock %}

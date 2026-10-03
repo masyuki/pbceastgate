@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}
+Events | PBC Eastgate
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                Events
+            </span>
+
+            <h1>
+                Upcoming Events
+            </h1>
+
+            <p>
+                Join us for worship, fellowship, prayer and ministry.
+            </p>
+
+        </div>
+
+
+        {% if events %}
+
+            <div class="card-grid">
+
+                {% for event in events %}
+
+                    <article class="card">
+
+                        {% if event.image %}
+
+                            <img
+                                src="{{ event.image.url }}"
+                                alt="{{ event.title }}"
+                            >
+
+                        {% endif %}
+
+
+                        <div class="card-body">
+
+                            <p>
+                                {{ event.event_date|date:"F j, Y" }}
+                            </p>
+
+
+                            <h2>
+                                {{ event.title }}
+                            </h2>
+
+
+                            {% if event.start_time %}
+
+                                <p>
+                                    <strong>Time:</strong>
+
+                                    {{ event.start_time|time:"g:i A" }}
+
+                                    {% if event.end_time %}
+                                        -
+                                        {{ event.end_time|time:"g:i A" }}
+                                    {% endif %}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if event.location %}
+
+                                <p>
+                                    <strong>Location:</strong>
+                                    {{ event.location }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if event.description %}
+
+                                <p>
+                                    {{ event.description|truncatewords:30 }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <a
+                                href="{{ event.get_absolute_url }}"
+                                class="btn btn-primary"
+                            >
+                                View Event
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="content-section">
+
+                <h2>
+                    No upcoming events.
+                </h2>
+
+                <p>
+                    Please check back soon for upcoming church events.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

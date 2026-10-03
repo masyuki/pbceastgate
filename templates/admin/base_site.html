@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+    {% if subtitle %}{{ subtitle }} | {% endif %}
+    PBC Eastgate Administration
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">
+        PBC Eastgate Administration
+    </a>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}

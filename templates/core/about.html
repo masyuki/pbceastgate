@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+
+{% block title %}
+About Us | PBC Eastgate
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================
+     ABOUT HERO
+     ========================================= -->
+
+<section class="about-hero">
+
+    <div class="about-container">
+
+        <span class="about-eyebrow">
+            PBC EASTGATE
+        </span>
+
+        <h1>
+            {{ site_info.about_title|default:"Who We Are" }}
+        </h1>
+
+        <p>
+            {{ site_info.tagline }}
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     ABOUT CONTENT
+     ========================================= -->
+
+<section class="about-introduction">
+
+    <div class="about-container about-content">
+
+        <div>
+
+            <span class="about-eyebrow">
+                ABOUT US
+            </span>
+
+            <h2>
+                {{ site_info.about_title|default:"Who We Are" }}
+            </h2>
+
+        </div>
+
+        <div class="about-copy">
+
+            {{ site_info.about_content|linebreaks }}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VISION & MISSION
+     ========================================= -->
+
+<section class="about-vision">
+
+    <div class="about-container about-pillars">
+
+        <div class="about-pillar">
+
+            <span class="about-pillar-number">
+                01
+            </span>
+
+            <h2>
+                Our Vision
+            </h2>
+
+            <p>
+                {{ site_info.vision|linebreaks }}
+            </p>
+
+        </div>
+
+
+        <div class="about-pillar">
+
+            <span class="about-pillar-number">
+                02
+            </span>
+
+            <h2>
+                Our Mission
+            </h2>
+
+            <p>
+                {{ site_info.mission|linebreaks }}
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CORE VALUES
+     ========================================= -->
+
+<section class="about-values">
+
+    <div class="about-container">
+
+        <div class="about-section-heading">
+
+            <span class="about-eyebrow">
+                WHAT GUIDES US
+            </span>
+
+            <h2>
+                Our Core Values
+            </h2>
+
+        </div>
+
+
+        {% if site_info.core_values %}
+
+            <div class="about-values-grid">
+
+                {% for value in site_info.core_values.splitlines %}
+
+                    {% if value.strip %}
+
+                        <div class="about-value">
+
+                            <span>
+                                {{ forloop.counter|stringformat:"02d" }}
+                            </span>
+
+                            <p>
+                                {{ value }}
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     PASTORS / LEADERSHIP
+     ========================================= -->
+
+<section class="pastors-section">
+
+    <div class="about-container">
+
+        <div class="pastors-heading">
+
+            <div>
+
+                <span class="about-eyebrow">
+                    OUR LEADERSHIP
+                </span>
+                <h2>
+                    Meet Our Leaders
+                </h2>
+
+            </div>
+
+            <p>
+                Meet the people who serve and provide spiritual
+                leadership to the PBC Eastgate family.
+            </p>
+
+        </div>
+
+
+        {% if pastors %}
+
+            <div class="pastors-grid">
+
+                {% for pastor in pastors %}
+
+                    <article class="pastor-card">
+
+                        <div class="pastor-photo">
+
+                            {% if pastor.photo %}
+
+                                <img
+                                    src="{{ pastor.photo.url }}"
+                                    alt="{{ pastor.name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="pastor-photo-placeholder">
+                                    <span>
+                                        {{ pastor.name|first }}
+                                    </span>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="pastor-details">
+
+                            <span class="pastor-title">
+                                {{ pastor.title }}
+                            </span>
+
+                            <h3>
+                                {{ pastor.name }}
+                            </h3>
+
+
+                            {% if pastor.bio %}
+
+                                <p>
+                                    {{ pastor.bio }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <div class="pastor-contact">
+
+                                {% if pastor.email %}
+
+                                    <a href="mailto:{{ pastor.email }}">
+                                        {{ pastor.email }}
+                                    </a>
+
+                                {% endif %}
+
+
+                                {% if pastor.phone %}
+
+                                    <a href="tel:{{ pastor.phone }}">
+                                        {{ pastor.phone }}
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="pastors-empty">
+
+                <p>
+                    Our pastoral team information will be
+                    available here soon.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VISIT CTA
+     ========================================= -->
+
+<section class="about-cta">
+
+    <div class="about-container">
+
+        <span class="about-eyebrow">
+            WE WOULD LOVE TO WELCOME YOU
+        </span>
+
+        <h2>
+            Come Worship With Us
+        </h2>
+
+        <p>
+            Join us as we worship, grow and serve together.
+        </p>
+
+        <a
+            href="{% url 'events:list' %}"
+            class="about-cta-button"
+        >
+            See Upcoming Events
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

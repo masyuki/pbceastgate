@@ -1,0 +1,43 @@
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.quick-action {
+    display: block;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e2e8e4;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.quick-action:hover {
+    transform: translateY(-2px);
+}
+
+.quick-action strong {
+    display: block;
+    color: #1f4d3a;
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.quick-action span {
+    color: #6b757d;
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+    .quick-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
